@@ -1,0 +1,26 @@
+[
+	{
+		"id": 0,
+		"nome":"Fabricio Carneiro",
+		"idade": 19,
+		"estado": "solteiro",
+		"cidade": "Bauru-sp",
+		"sexo": "masculino"
+	},
+	{
+		"id": 1,
+		"nome":"Willian",
+		"idade": 19,
+		"estado": "solteiro",
+		"cidade": "Agudos-sp",
+		"sexo": "masculino"
+	},
+	{
+		"id": 2,
+		"nome":"Marcos Vinicius",
+		"idade": 30,
+		"estado": "solteiro",
+		"cidade": "Lençois Paulista-sp",
+		"sexo": "masculino"
+	}
+]
