@@ -106,5 +106,55 @@ module.exports = schema
 ```
 
 ### 3 - Explicando alguns passos 🏃‍
-##### No passo 5° criamos nosso servidor *node.js* e importamos algumas dependências nele, e também importamos nosso cod *graphql.js*. Bom dentro deles temos uma rota, que faz chamada para "usuario" e nela passamos nosso cod *graphql.js* `app.use('/usuario', graphqlHTTP({schema:users, pretty: true})) `
+##### No passo 5° criamos nosso servidor *node.js* e importamos algumas dependências nele, e também importamos nosso cod *graphql.js*. Bom dentro deles temos uma rota, que faz chamada para "usuario" e nela passamos nosso cod *graphql.js* 
+`app.use('/usuario', graphqlHTTP({schema:users, pretty: true})) `
 
+##### No passo 7° criamos nosso arquivo *graphql.js* dentro dele temos nossa função que define o tipo de dados que sera passado como ( int, string ), veja abaixo:
+
+```
+let dadosUsuario = new graphql.GraphQLObjectType({
+  name: 'usuarios',
+  fields: {
+   id: { type: new graphql.GraphQLNonNull(graphql.GraphQLInt) },
+   nome: { type: graphql.GraphQLString },
+   idade: {type: graphql.GraphQLInt}, 
+   estado: {type: graphql.GraphQLString },
+   cidade: {type: graphql.GraphQLString },
+   sexo: {type: graphql.GraphQLString}
+  }
+})
+```
+##### ok logo mais abaixo temos outra que é responsavél pela passagem de parametro e pelo retorno desejado.
+```
+let schema  = new graphql.GraphQLSchema({
+  query: new graphql.GraphQLObjectType({
+    name: 'query',
+    fields: {
+      busca_usuario: {
+      type: dadosUsuario,
+      args: {
+         id: { type: graphql.GraphQLInt },
+      },
+      resolve: function (_ , args) {
+        let response = usuarios.find(function ( user ){
+           return (user.id === args.id)
+        })
+         return response
+        }
+      }
+    }
+  })
+})
+```
+##### Agora se rodarmos o comando `node servidor` e fezermos uma busca na *url* do navegador, como por exmplo **http://localhost:3000/usuario?query={busca_usuario(id:2){id,nome}}** vamos ter um retorno como:
+```
+{
+  "data": {
+   "busca_usuario": {
+     "id": 2,
+     "nome": "Marcos Vinicius"
+    }
+  }
+}
+```
+### Bom se tudo funfou é isso. Logicamente que isso é um exemplo básico, e que a complexidade disso não tem limites. valeuuu!! 🙋‍🙋‍
